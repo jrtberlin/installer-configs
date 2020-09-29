@@ -1,0 +1,64 @@
+{
+    "name": "Huawei Watch",
+    "codename": "sturgeon",
+    "unlock": [],
+    "user_actions": {
+      "bootloader": {
+        "title": "Is the device in Bootloader mode?",
+        "description": "You should be seeing the 'FASTBOOT MENU' on the device now. If not, reboot the device and press the button when the Huawei logo is showing.",
+        "button": true
+      }
+     },
+    "operating_systems": [
+      {
+        "name": "Asteroid OS",
+        "sanity_check": "Are you sure?",
+        "options": [],
+        "prerequisites": [],
+        "steps": [
+          {
+            "type": "download",
+            "group": "asteroidos",
+            "files": [
+              {
+                "url": "https://release.asteroidos.org/nightlies/sturgeon/asteroid-image-sturgeon.ext4",
+                "checksum": "bb4e60595129b8a49dd3eccf012bc2bc69dec9892d46a0ccb9bb09a0415b7747"
+              },
+              {
+                "url": "https://release.asteroidos.org/nightlies/sturgeon/zImage-dtb-sturgeon.fastboot",
+                "checksum": "2af0fea856b9fc65f9b13d1544d1257bc2be4322db5881d4f3c9df2092478ed4"
+              }
+            ]
+          },
+          {
+            "type": "adb:reboot",
+            "to_state": "bootloader",
+            "fallback_user_action": "bootloader"
+          },
+          {
+            "type": "fastboot:flash",
+            "flash": [
+              {
+                "partition": "userdata",
+                "file": "asteroid-image-sturgeon.ext4",
+                "group": "asteroidos"
+              },
+              {
+                "partition": "boot",
+                "file": "zImage-dtb-sturgeon.fastboot",
+                "group": "asteroidos"
+              }
+            ]
+          },
+          {
+            "type": "fastboot:boot",
+            "file": "zImage-dtb-sturgeon.fastboot",
+            "group": "asteroidos"
+          }
+        ],
+        "slideshow": [],
+        "get_involved": "https://asteroidos.org/community/"
+      }
+    ]
+  }
+  
